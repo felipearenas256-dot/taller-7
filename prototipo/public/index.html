@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>PCII · Centro de control</title>
+  <link rel="stylesheet" href="/estilos.css">
+</head>
+<body>
+  <header class="barra">
+    <div class="marca">
+      <span class="logo" aria-hidden="true"></span>
+      <div>
+        <h1>Centro de control</h1>
+        <p>Ciudad inteligente · energía, movilidad y residuos</p>
+      </div>
+    </div>
+    <div class="derecha">
+      <div class="reloj" title="Hora simulada: 1 segundo real = 2 minutos">
+        <span id="icono-dia" aria-hidden="true">☀</span>
+        <span id="reloj">--:--</span>
+      </div>
+      <div id="sistema" class="estado">Conectando…</div>
+    </div>
+  </header>
+
+  <main>
+    <section class="kpis" id="kpis" aria-label="Indicadores"></section>
+
+    <section class="principal">
+      <article class="tarjeta">
+        <div class="cab"><h2>Mapa de la ciudad</h2><div class="leyenda">
+          <span><i class="pt ok"></i>Vacío</span><span><i class="pt medio"></i>Medio</span><span><i class="pt lleno"></i>Por recoger</span><span><i class="ruta"></i>Ruta</span>
+        </div></div>
+        <svg id="mapa" viewBox="0 0 10 10" role="img" aria-label="Mapa de la ciudad"></svg>
+      </article>
+
+      <div class="columna">
+        <article class="tarjeta">
+          <div class="cab"><h2>Consumo eléctrico</h2><span class="nota" id="prediccion"></span></div>
+          <svg id="grafica" viewBox="0 0 400 150" preserveAspectRatio="none" role="img" aria-label="Consumo eléctrico"></svg>
+          <div class="leyenda"><span><i class="ln real"></i>Real</span><span><i class="ln base"></i>Sin alumbrado inteligente</span></div>
+        </article>
+
+        <article class="tarjeta">
+          <div class="cab"><h2>Tráfico por zona</h2><span class="nota">verde del semáforo ajustado por IA</span></div>
+          <div id="zonas" class="zonas"></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="secundaria">
+      <article class="tarjeta">
+        <div class="cab"><h2>Recolección</h2><span id="camion" class="etiqueta"></span></div>
+        <div id="ruta"></div>
+        <button class="boton" id="btn-despachar">Enviar camión</button>
+      </article>
+
+      <article class="tarjeta">
+        <div class="cab"><h2>Alertas</h2></div>
+        <ul id="alertas" class="alertas"></ul>
+      </article>
+
+      <article class="tarjeta">
+        <div class="cab"><h2>Probar el sistema</h2></div>
+        <button class="prueba" id="btn-desconectar">
+          <b>Cortar Internet al Edge Norte</b>
+          <span>Sigue funcionando solo y sincroniza al volver</span>
+        </button>
+        <button class="prueba" id="btn-caida">
+          <b>Tumbar el servicio de Movilidad</b>
+          <span>El resto sigue y se reinicia solo</span>
+        </button>
+      </article>
+    </section>
+
+    <section class="tarjeta">
+      <div class="cab"><h2>Cómo viajan los datos</h2><span class="nota" id="bus"></span></div>
+      <ol id="flujo" class="flujo"></ol>
+    </section>
+  </main>
+
+  <div id="aviso" class="aviso" role="status" aria-live="polite"></div>
+  <script src="/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+# Despliegue con contenedores: cada nodo del sistema distribuido corre en su propio contenedor.
+# Uso: docker compose up --build   ->   http://localhost:7100
+x-nodo: &nodo
+  build: .
+  image: pcii-prototipo
+  restart: always # como Kubernetes: si un contenedor falla, se reinicia solo
+
+services:
+  broker:
+    <<: *nodo
+    command: ["node", "servicios/broker.js"]
+  energia:
+    <<: *nodo
+    command: ["node", "servicios/energia.js"]
+    depends_on: [broker]
+  movilidad:
+    <<: *nodo
+    command: ["node", "servicios/movilidad.js"]
+    depends_on: [broker]
+  residuos:
+    <<: *nodo
+    command: ["node", "servicios/residuos.js"]
+    depends_on: [broker]
+  edge-norte:
+    <<: *nodo
+    command: ["node", "servicios/edge.js", "edge-norte"]
+    depends_on: [broker]
+  edge-sur:
+    <<: *nodo
+    command: ["node", "servicios/edge.js", "edge-sur"]
+    depends_on: [broker]
+  sensores:
+    <<: *nodo
+    command: ["node", "servicios/sensores.js"]
+    depends_on: [edge-norte, edge-sur]
+  gateway:
+    <<: *nodo
+    command: ["node", "servicios/gateway.js"]
+    ports:
+      - "7100:7100"
+    depends_on: [energia, movilidad, residuos]

@@ -1,0 +1,49 @@
+%% Arquitectura distribuida - Plataforma Ciudad Inteligente Integrada (PCII)
+%% Pegar en https://mermaid.live para ver y exportar como PNG/SVG
+flowchart TB
+    subgraph C1["Capa 1 · Dispositivos IoT"]
+        E1["Energía<br/>Medidores y luminarias LED"]
+        M1["Movilidad<br/>Cámaras de aforo, sensores, GPS"]
+        R1["Residuos<br/>Sensores de llenado"]
+    end
+
+    subgraph C2["Capa 2 · Edge Computing"]
+        GW["Gateway por zona<br/>Broker MQTT local"]
+        FI["Filtrado y agregación<br/>Resumen por minuto"]
+        EA["Edge AI<br/>Control de semáforos y luminarias"]
+    end
+
+    subgraph C3["Capa 3 · Comunicación"]
+        MQ["MQTT sobre TLS<br/>4G / 5G / fibra"]
+        LO["LoRaWAN<br/>Contenedores lejanos"]
+        KA["Apache Kafka<br/>Bus de eventos · REST/gRPC"]
+    end
+
+    subgraph C4["Capa 4 · Servicios distribuidos (Kubernetes)"]
+        AG["API Gateway<br/>OAuth 2.0 y roles"]
+        MS["Microservicios en Docker<br/>Energía · Movilidad · Residuos · Alertas"]
+        IA["Servicios de IA<br/>Predicción y rutas óptimas"]
+    end
+
+    subgraph C5["Capa 5 · Almacenamiento y visualización"]
+        BD[("Bases de datos<br/>TimescaleDB · PostgreSQL")]
+        DL[("Data lake en la nube<br/>Parquet / S3")]
+        DB["Dashboards<br/>Alcaldía y app ciudadana"]
+    end
+
+    E1 --> GW
+    M1 --> GW
+    R1 --> GW
+    GW --> FI --> EA
+    FI --> MQ
+    R1 -.-> LO
+    MQ --> KA
+    LO --> KA
+    KA --> MS
+    AG --> MS
+    MS --> IA
+    MS --> BD
+    MS --> DL
+    BD --> DB
+    DL --> IA
+    IA -. "órdenes de control" .-> EA

@@ -1,0 +1,12 @@
+{
+  "name": "pcii-prototipo",
+  "version": "1.0.0",
+  "description": "Prototipo de la Plataforma Ciudad Inteligente Integrada (PCII): sistema distribuido de energía, movilidad y residuos",
+  "private": true,
+  "scripts": {
+    "start": "node iniciar.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
